@@ -3,9 +3,10 @@ from tkinter import *
 from tkinter import ttk
 from create_par import create_paragraph 
 from add_pages import create_page
+from select_files import select_files
 import webbrowser, os, sys
 #path of index file
-path = 'index.html'
+path = 'html_files/index.html'
 #check if the file exists
 check_file = os.path.isfile(path)
 #if it exists just open it
@@ -46,7 +47,8 @@ else:
     #new label
     ttk.Label(frm, text="Choose an option").grid(column=0, row=0)
     #new button to add a paragraph
-    ttk.Button(frm, text="Add page", command=create_page).grid(column=0, row=1)   
+    ttk.Button(frm, text="Add page", command=create_page).grid(column=0, row=1)
+    ttk.Button(frm, text="Edit page", command=select_files).grid(column=1, row=1)      
 #new button to add preview
 ttk.Button(frm, text="preview", command=preview).grid(column=0, row=2)
 #new button to reload page

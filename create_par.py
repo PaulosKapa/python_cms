@@ -8,7 +8,7 @@ def create_paragraph():
             if input_value!='':
                 #imbort beautiful soup
                 from bs4 import BeautifulSoup as bs
-                with open("index.html") as fp:
+                with open("html_files/index.html") as fp:
                     soup = bs(fp) 
                 #make a new paragraph tag
                 new_par = soup.new_tag("p")
