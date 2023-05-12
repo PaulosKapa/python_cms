@@ -31,6 +31,10 @@ def preview():
 def restart_program():
     python = sys.executable
     os.execl(python, python, * sys.argv)
+def save_file():
+    html_file = open("saves/selected_file.txt", "w")  
+    html_file.writelines('index.html')
+    html_file.close()
 #new window
 root = Tk()
 #dimensions
@@ -42,7 +46,7 @@ if index_content == "":
     #new label
     ttk.Label(frm, text="It seems like your page doesn't have content in it. What would you like to add?").grid(column=0, row=0)
     #new button to add a paragraph
-    ttk.Button(frm, text="paragraph", command=create_paragraph).grid(column=0, row=1)
+    ttk.Button(frm, text="paragraph", command=lambda:[create_paragraph(), save_file()]).grid(column=0, row=1)
 else:
     #new label
     ttk.Label(frm, text="Choose an option").grid(column=0, row=0)

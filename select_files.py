@@ -1,3 +1,4 @@
+from edit_page import edit
 def select_files():
     def save_file():
         html_file = open("saves/selected_file.txt", "w")  
@@ -14,12 +15,12 @@ def select_files():
     for file in files:
         if ".html" in file.name:
             #new button
-            printButton = tk.Button(root, text = file.name, command= save_file)#lambda: [print("ds"), print("sd")])
+            printButton = tk.Button(root, text = file.name, command=lambda: [save_file(), edit()])
             printButton.pack()   
     for file in files1:
         if ".html" in file.name:
             #new button
-            printButton = tk.Button(root, text = file.name, command=print("hello"))
+            printButton = tk.Button(root, text = file.name, command=lambda: [save_file(), edit()])
             printButton.pack()      
     root.mainloop()    
 #run only directly or when called from imported file
