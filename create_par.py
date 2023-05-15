@@ -26,6 +26,7 @@ def create_paragraph():
                     id_exists = True
                 else:
                     id_exists = False
+                    break
             #check if user entered any text
             if input_value!='' and id_input!='' and id_exists == False:
 
@@ -46,7 +47,13 @@ def create_paragraph():
                 else:
                     html_file =  open("html_files/html"+get_file, "w")
                 #write to file
-                html_file.writelines(str(soup))
+                #check for special characters
+                if "&lt;"in str(soup):
+                    text_left = str(soup).replace("&lt;", "<")
+                    text_right = text_left.replace("&gt;", ">")
+                    html_file.writelines(text_right)
+                else:
+                    html_file.writelines(str(soup))
                 html_file.close()
                 root.destroy()
             else:
@@ -62,7 +69,7 @@ def create_paragraph():
         textBox.pack()
         #input for id
         tk.Label(root, text="Enter the id of the paragraph").pack()  
-        id_textBox = tk.Text(root, height = 5, width = 5)
+        id_textBox = tk.Text(root, height = 1, width = 16)
         id_textBox.pack()
         #new button
         printButton = tk.Button(root, text = "Save", command=get_input)
