@@ -33,7 +33,7 @@ def move():
     #new window
     root = tk.Tk()
     #dimensions
-    root.geometry("700x350")
+    root.geometry('%dx%d'%(root.winfo_screenwidth(),root.winfo_screenheight()))
     while i< len(divs):
         text_label = str
         if "<p>" in str(divs[i].findChildren()):

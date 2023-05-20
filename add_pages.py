@@ -5,7 +5,6 @@ def create_page():
             import os
             #set the path
             page_text = "html_files/html/"+textBox.get("1.0","end-1c")+".html"
-            print(page_text)
             #if the entry isn't empty or the file doesn't already exist save the html file with some basic tags
             if textBox.get("1.0","end-1c")!='' and os.path.exists(page_text) == False:
                 html_file = open(page_text, "w")  
@@ -21,7 +20,7 @@ def create_page():
         #new window
         root = tk.Tk()
         #dimensions
-        root.geometry("700x350")
+        root.geometry('%dx%d'%(root.winfo_screenwidth(),root.winfo_screenheight()))
         page_name = tk.StringVar()
         #new label
         tk.Label(root, text="Enter the name of the page").pack()  

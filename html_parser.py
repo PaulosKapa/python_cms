@@ -1,7 +1,6 @@
 from bs4 import BeautifulSoup as bs
-from tkinter import *
-from tkinter import ttk
-from create_par import create_paragraph 
+import tkinter as tk
+from add_tags import add_tags
 from add_pages import create_page
 from select_files import select_files
 import webbrowser, os, sys
@@ -36,28 +35,26 @@ def save_file():
     html_file.writelines('index.html')
     html_file.close()
 #new window
-root = Tk()
+root = tk.Tk()
 #dimensions
-frm = ttk.Frame(root, padding=10)
-#new grid
-frm.grid()
+root.geometry('%dx%d'%(root.winfo_screenwidth(),root.winfo_screenheight()))
 #check if index_content is empy
 if index_content == "":
     #new label
-    ttk.Label(frm, text="It seems like your page doesn't have content in it. What would you like to add?").grid(column=0, row=0)
+    tk.Label(root, text="It seems like your page doesn't have content in it.").pack()
     #new button to add a paragraph
-    ttk.Button(frm, text="paragraph", command=lambda:[create_paragraph(), save_file()]).grid(column=0, row=1)
+    tk.Button(root, text="paragraph", command=lambda:[add_tags(), save_file()]).pack()
 else:
     #new label
-    ttk.Label(frm, text="Choose an option").grid(column=0, row=0)
+    tk.Label(root, text="Choose an option").pack()
     #new button to add a paragraph
-    ttk.Button(frm, text="Add page", command=create_page).grid(column=0, row=1)
-    ttk.Button(frm, text="Edit page", command=select_files).grid(column=1, row=1)      
+    tk.Button(root, text="Add page", command=create_page).pack()
+    tk.Button(root, text="Edit page", command=select_files).pack()    
 #new button to add preview
-ttk.Button(frm, text="preview", command=preview).grid(column=0, row=2)
+tk.Button(root, text="preview", command=preview).pack()
 #new button to reload page
-ttk.Button(frm, text="reload", command=restart_program).grid(column=0, row=3)
-ttk.Button(frm, text="quit", command=root.destroy).grid(column=0, row=4)
+tk.Button(root, text="reload", command=restart_program).pack()
+tk.Button(root, text="quit", command=root.destroy).pack()
 root.mainloop()
 
 

@@ -1,30 +1,18 @@
-def edit_par():
-    def save_file():
-        #destroy the current paragraph and replace it with a new one that has the written text
-        paragraph = par.find("p")
-        paragraph.decompose()
-        new_par = soup.new_tag('p')
-        new_par.string = text.get("1.0", "end-1c")
-        
-        par.append(new_par)
+#create new function to get the input and save it
+def add_tags():
+    def save_file():        
         if get_file == "index.html":
             html_file = open("html_files/index.html", 'w')
         else:
             html_file =  open("html_files/html"+get_file, "w")
-        #write to file
-        #check if there are tags
-        no_par = str(soup).replace("<p>", "")
-        no_par1 = no_par.replace("</p>", "")
-        if "&lt;"in str(soup):
-            text_left = no_par1.replace("&lt;", "<")
-            text_right = text_left.replace("&gt;", ">")
-            html_file.writelines(text_right)
-        else:
+            #write to file
+            #check if there are tags
             html_file.writelines(str(soup))
-        html_file.close()
-        tk.Label(text = "Saved").pack()
+            html_file.close()
+            tk.Label(text = "Saved").pack()
     from bs4 import BeautifulSoup as bs
     import tkinter as tk
+    import cssutils
     text_file = open("saves/selected_file.txt", "r")
     get_file = text_file.readline()  
     if get_file == "index.html":
@@ -35,20 +23,19 @@ def edit_par():
             soup = bs(fp) 
     id_file = open("saves/selected_id.txt", "r")
     get_id = id_file.readline() 
-    par = soup.find("div", {"id": get_id})
+    image = soup.find("div", {"id": get_id})
+    # Parse the stylesheet, replace color
+    parser = cssutils.parseFile('html_files/styles/styles.css')
     #new window
     root = tk.Tk()
     #dimensions
     root.geometry('%dx%d'%(root.winfo_screenwidth(),root.winfo_screenheight()))
-    text = tk.Text(root, height = 16, width = 32)
-    #get the text with tags
-
-    
-    text.insert("1.0", par.find('p'))
+    tk.Label(root, text = "Change attribute").pack();
+    text = tk.Text(root, height = 1, width = 16)
     text.pack()
+    #get the text with tags
     tk.Button(root, text = "save", command=save_file).pack()
     root.mainloop()
-
 #run only directly or when called from imported file
 if __name__ == "__main__":
-    edit_par()
+    add_tags()

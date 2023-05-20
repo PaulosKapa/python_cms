@@ -63,7 +63,7 @@ def create_paragraph():
         #new window
         root = tk.Tk()
         #dimensions
-        root.geometry("700x350")
+        root.geometry('%dx%d'%(root.winfo_screenwidth(),root.winfo_screenheight()))
         #new input box
         textBox = tk.Text(root, height = 5, width = 20)
         textBox.pack()
