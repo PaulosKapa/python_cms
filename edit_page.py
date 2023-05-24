@@ -1,4 +1,21 @@
 def edit():
+    #change title
+    def change_title():
+        title_text = title_textBox.get("1.0","end-1c")
+        if title_text != "":
+            title_tag = soup.find('title')
+            title_tag.string = str(title_text)
+            if get_file == "index.html":
+                file = open("html_files/index.html", "w")
+            else:
+                file = open("html_files/html/"+get_file, "w")
+        #write to file
+            file.writelines(str(soup))
+            file.close()
+        else:
+            tk.Label(root,"Please add a title").pack()
+        title_textBox.delete("1.0","end-1c")
+    selected_id = ""
     #delete tags
     def delete():
         #get div to delete
@@ -13,6 +30,36 @@ def edit():
         #write to file
         file.writelines(str(soup))
         file.close()
+        
+        text_file = open("saves/selected_id.txt", "r")
+        selected_id = text_file.readline()
+        text_file.close()
+        #remove styles
+        import cssutils
+        # Parse the stylesheet
+        style_path = 'html_files/styles/styles.css'
+        parser = cssutils.parseFile(style_path)
+        selector_type = "#"+selected_id
+        rules_to_keep = []
+        
+        for rule in parser:
+            if isinstance(rule, cssutils.css.CSSStyleRule) and selector_type not in rule.selectorText:
+                rules_to_keep.append(rule)
+        styles_file = open("html_files/styles/styles.css", "w")
+        styles_file.writelines("")
+        styles_file.close()
+        new_sheet = cssutils.parseFile(style_path)
+        for rule in rules_to_keep:
+            new_sheet.add(rule)
+        with open(style_path, 'w') as css_file:
+            css_file.write(new_sheet.cssText.decode('utf-8'))
+            tk.Label(root, text = 'Saved')
+        #check if the id is an image and dilete the directory
+        if "images" in selected_id:
+            import shutil
+            #transform the text_id to the dir name
+            dir_path = 'html_files/images/' + selected_id.replace('images', '')
+            shutil.rmtree(dir_path)
     
     def preview():
         import webbrowser, os
@@ -29,6 +76,7 @@ def edit():
     def get_id():  
         #make the input into a readable string
         text_id = id_textBox.get("1.0","end-1c")
+        selected_id = text_id
         #text_id = printButton.cget('text')
         #need_id = text_id[text_id.find(':')+1:]
         #check if the id exists to edit is
@@ -68,12 +116,13 @@ def edit():
     #loop throught all the divs
     while i< len(divs):
         text_label = str
-        print(divs[i].findChildren())
         #if it finds a paragraph then add paragraph
         if "<p>" in str(divs[i].findChildren()):
-            text_label = "paragraph: "+divs[i]['id']
+            text_label = "Paragraph: "+divs[i]['id']
         elif "<img" in str(divs[i].findChildren()):
-            text_label = "image: "+divs[i]['id']
+            text_label = "Image: "+divs[i]['id']
+        elif "<button>" in str(divs[i].findChildren()):
+            text_label = "Button: "+divs[i]['id']
         else:
             text_label = "error"
         #show labels for what can be edited
@@ -89,10 +138,12 @@ def edit():
     tk.Button(root, text="delete tags", command=lambda:[get_id(), delete()]).pack()
     from move_tags import move
     tk.Button(root, text="move tags", command=move).pack()
-    tk.Button(root, text="Restart", command=restart_program).pack()
-    from create_par import create_paragraph 
-    tk.Button(root, text="Add paragraph", command=create_paragraph).pack()
+    tk.Label(root, text="Enter the title of the page").pack()  
+    title_textBox = tk.Text(root, height = 1, width = 16)
+    title_textBox.pack()
+    tk.Button(root, text="Edit title", command=change_title).pack()
     tk.Button(root, text="Preview", command=preview).pack()
+    tk.Button(root, text="Restart", command=restart_program).pack()
     root.mainloop()  
 #run only directly or when called from imported file
 if __name__ == "__main__":

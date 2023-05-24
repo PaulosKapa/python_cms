@@ -5,7 +5,7 @@ def create_page():
             page_text = "html_files/html"+page_name.get()+".html"
             if page_name.get()!='' and os.path.exists(page_text) == False:
                 html_file = open(page_text, "w")  
-                init = '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Document</title></head><body></body></html>'
+                init = '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Document</title><link rel="stylesheet" href="styles/styles.css"></head><body></body></html>'
                 html_file.writelines(init)
                 html_file.close()
                 page_name.set("")      

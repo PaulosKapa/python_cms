@@ -42,11 +42,12 @@ def edit_par():
     root.geometry('%dx%d'%(root.winfo_screenwidth(),root.winfo_screenheight()))
     text = tk.Text(root, height = 16, width = 32)
     #get the text with tags
-
-    
     text.insert("1.0", par.find('p'))
     text.pack()
-    tk.Button(root, text = "save", command=save_file).pack()
+    #edit the paragraph style
+    from edit_image import edit_img
+    tk.Button(root, text = "Edit style", command=edit_img).pack()
+    tk.Button(root, text = "Save", command=save_file).pack()
     root.mainloop()
 
 #run only directly or when called from imported file

@@ -11,6 +11,8 @@ def add_tags():
         tk.Button(root, text="Add paragraph", command=create_paragraph).pack()
         from add_image import add_image
         tk.Button(root, text="Add images", command=add_image).pack()
+        from add_button import create_button
+        tk.Button(root, text="Add button", command=create_button).pack()
         root.mainloop()
 #run only directly or when called from imported file
 if __name__ == "__main__":

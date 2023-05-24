@@ -15,14 +15,14 @@ if check_file == True:
 #else create it and then write on it
 else:
     html_file = open("html_files/index.html", "w")  
-    init = '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Document</title></head><body></body></html>'
+    init = '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Document</title><link rel="stylesheet" href="styles/styles.css"></head><body></body></html>'
     html_file.writelines(init)
     html_file.close()
     #then reopen it for reading
     with open("html_files/index.html") as fp:
         soup = bs(fp) 
 #check if the index.html is empty
-index_content = soup.body.text
+index_content = soup.body.findChildren()
 #preview the website
 def preview():
     webbrowser.open('file://' + os.path.realpath(path))
@@ -39,11 +39,11 @@ root = tk.Tk()
 #dimensions
 root.geometry('%dx%d'%(root.winfo_screenwidth(),root.winfo_screenheight()))
 #check if index_content is empy
-if index_content == "":
+if index_content == []:
     #new label
     tk.Label(root, text="It seems like your page doesn't have content in it.").pack()
     #new button to add a paragraph
-    tk.Button(root, text="paragraph", command=lambda:[add_tags(), save_file()]).pack()
+    tk.Button(root, text="Add tag", command=lambda:[add_tags(), save_file()]).pack()
 else:
     #new label
     tk.Label(root, text="Choose an option").pack()
@@ -56,5 +56,3 @@ tk.Button(root, text="preview", command=preview).pack()
 tk.Button(root, text="reload", command=restart_program).pack()
 tk.Button(root, text="quit", command=root.destroy).pack()
 root.mainloop()
-
-

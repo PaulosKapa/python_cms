@@ -92,6 +92,8 @@ def add_image():
                     #write to file
                     html_file.writelines(str(soup))
                     html_file.close()
+            else:
+                tk.Label(root, text="Add a collection name").pack()
         # Add a Label widget
         label = tk.Label(root, text="Click the Button to select image")
         label.pack()
