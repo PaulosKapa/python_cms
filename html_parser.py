@@ -51,8 +51,11 @@ else:
     tk.Button(root, text="Add page", command=create_page).pack()
     tk.Button(root, text="Edit page", command=select_files).pack()    
 #new button to add preview
-tk.Button(root, text="preview", command=preview).pack()
+tk.Button(root, text="Preview", command=preview).pack()
 #new button to reload page
-tk.Button(root, text="reload", command=restart_program).pack()
-tk.Button(root, text="quit", command=root.destroy).pack()
+tk.Button(root, text="Reload", command=restart_program).pack()
+#save to github
+from save_github import save_git
+tk.Button(root, text="Save", command=save_git).pack()
+tk.Button(root, text="Quit", command=root.destroy).pack()
 root.mainloop()
