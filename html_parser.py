@@ -55,7 +55,5 @@ tk.Button(root, text="Preview", command=preview).pack()
 #new button to reload page
 tk.Button(root, text="Reload", command=restart_program).pack()
 #save to github
-from save_github import save_git
-tk.Button(root, text="Save", command=save_git).pack()
 tk.Button(root, text="Quit", command=root.destroy).pack()
 root.mainloop()
