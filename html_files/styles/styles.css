@@ -2,8 +2,11 @@
     color: blueviolet
     }
 #par1 p {
-    color: yellow
+    color: red
     }
 #hellobutton button {
-    color: yellow
+    color: blue
+    }
+#helobutton button {
+    color: blue
     }

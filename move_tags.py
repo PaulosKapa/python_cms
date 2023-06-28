@@ -38,6 +38,10 @@ def move():
         text_label = str
         if "<p>" in str(divs[i].findChildren()):
             text_label = "paragraph: "+divs[i]['id']
+        elif "<img >" in str(divs[i].findChildren()):
+            text_label = "image: "+divs[i]['id']
+        if "<button>" in str(divs[i].findChildren()):
+            text_label = "button: "+divs[i]['id']
         else:
             text_label = "error"
         tk.Label(root, text= text_label).pack()

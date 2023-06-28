@@ -21,12 +21,30 @@ def edit_img():
             final_value = str(value_text) + "em"
         else:
             final_value = value_text
-        for rule in parser:
-            if isinstance(rule, cssutils.css.CSSStyleRule) and selector_type in rule.selectorText:
-                rule.style.setProperty(attribute_text, final_value)
-                with open(style_path, 'w') as css_file:
-                    css_file.write(parser.cssText.decode('utf-8'))
-                    tk.Label(root, text = 'Saved')
+        if selector_type not in parser:
+            # Create a new CSSStyleRule
+            new_rule = cssutils.css.CSSStyleRule()
+            new_rule.selectorText = selector_type  # Set the selector for the new rule
+            new_rule.style.setProperty(attribute_text, final_value)  # Set the property and its value
+
+            # Append the new rule to the parser
+            parser.insertRule(new_rule, index=len(parser.cssRules))
+
+            # Write the updated CSS content, including the new rule, to the file
+            with open(style_path, 'w') as css_file:
+                css_file.write(parser.cssText.decode('utf-8'))
+
+            # Display "Saved" label or perform any other necessary actions
+            tk.Label(root, text="Saved").pack()
+
+        else:
+            for rule in parser:
+            
+                if isinstance(rule, cssutils.css.CSSStyleRule) and isinstance(selector_type, str) and selector_type in rule.selectorText:
+                    rule.style.setProperty(attribute_text, final_value)
+                    with open(style_path, 'w') as css_file:
+                        css_file.write(parser.cssText.decode('utf-8'))
+                        tk.Label(root, text='Saved').pack()
                     
     from bs4 import BeautifulSoup as bs
     import tkinter as tk
